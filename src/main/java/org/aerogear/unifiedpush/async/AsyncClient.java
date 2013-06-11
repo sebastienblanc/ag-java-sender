@@ -73,7 +73,7 @@ public class AsyncClient implements Client {
             int statusCode = response.getStatusCode();
             if (statusCode != 200) {
                 logger.severe("Receiving status code: " + statusCode);
-                throw new JavaSenderException();
+                throw new JavaSenderException(statusCode);
             }
         } catch (Exception e) { 
             e.printStackTrace();
