@@ -22,10 +22,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.aerogear.unifiedpush.exception.JavaSenderException;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
+import static org.mockito.Matchers.anyMap;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -89,5 +93,24 @@ public class DefaultJavaSenderTest {
         
         long end = System.currentTimeMillis();
         System.out.println("Took: " + (end-start));
+    }
+
+    @Test
+    public void sendJavaSenderException() {
+
+        doThrow(JavaSenderException.class).when(client).post(anyMap(),anyString());
+
+
+        Map<String, String> jsonPlayload = new HashMap<String, String>();
+        jsonPlayload.put("alert", "Hello from Java Sender API, via JUnit  (RESTEasy Client)");
+        jsonPlayload.put("sound", "default");
+
+        // send it out:
+        try{
+        defaultJavaSender.broadcast(jsonPlayload, "98a0c039-7ec3-44f9-ba7e-98a293f87b80");
+        }
+        catch (JavaSenderException e) {
+            assert true;
+        }
     }
 }

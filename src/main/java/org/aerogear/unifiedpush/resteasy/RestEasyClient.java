@@ -24,6 +24,7 @@ import java.util.logging.Logger;
 import org.aerogear.unifiedpush.Client;
 import javax.ws.rs.core.MediaType;
 
+import org.aerogear.unifiedpush.exception.JavaSenderException;
 import org.jboss.resteasy.client.ClientRequest;
 import org.jboss.resteasy.client.ClientResponse;
 
@@ -66,6 +67,7 @@ public class RestEasyClient implements Client {
             int statusCode = resp.getStatus();
             if (statusCode != 200) {
                 logger.severe("Receiving status code: " + statusCode);
+                throw new JavaSenderException();
             }
             
         } catch (Exception e) {

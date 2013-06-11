@@ -23,6 +23,7 @@ import java.util.Map;
 import java.util.logging.Logger;
 
 import org.aerogear.unifiedpush.Client;
+import org.aerogear.unifiedpush.exception.JavaSenderException;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import com.ning.http.client.AsyncHttpClient;
@@ -72,6 +73,7 @@ public class AsyncClient implements Client {
             int statusCode = response.getStatusCode();
             if (statusCode != 200) {
                 logger.severe("Receiving status code: " + statusCode);
+                throw new JavaSenderException();
             }
         } catch (Exception e) { 
             e.printStackTrace();
